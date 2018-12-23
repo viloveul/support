@@ -1,5 +1,5 @@
 {
-    "name": "zafex/viloveul-support",
+    "name": "viloveul/support",
     "description": "Viloveul micro.",
     "type": "component",
     "license": "MIT",
@@ -7,7 +7,7 @@
         "name": "Fajrul Akbar Zuhdi",
         "email": "fajrulaz@gmail.com"
     }],
-    "keywords": ["component", "micro", "zafex", "viloveul", "fajrulaz", "support", "helpers"],
+    "keywords": ["component", "zafex", "viloveul", "fajrulaz", "support", "helpers"],
     "minimum-stability": "dev",
     "prefer-stable": true,
     "config": {
@@ -18,6 +18,11 @@
         "symfony/var-dumper": "~3.4|~4.0"
     },
     "autoload": {
-        "files": ["src/array.php", "src/debug.php", "src/env.php", "src/str.php"]
+        "files": [
+            "src/array.php",
+            "src/debug.php",
+            "src/env.php",
+            "src/str.php"
+        ]
     }
 }
