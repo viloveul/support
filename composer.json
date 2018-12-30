@@ -21,7 +21,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Viloveul\\Framework\\": "src/"
+            "Viloveul\\Support\\": "src/"
         },
         "files": [
             "helpers/array.php",
