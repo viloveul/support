@@ -15,15 +15,19 @@
     },
     "require": {
         "php": "~7.0",
+        "illuminate/database": "v5.*",
         "danielstjules/stringy": "^3.1",
         "symfony/var-dumper": "~3.4|~4.0"
     },
     "autoload": {
+        "psr-4": {
+            "Viloveul\\Framework\\": "src/"
+        },
         "files": [
-            "src/array.php",
-            "src/debug.php",
-            "src/env.php",
-            "src/str.php"
+            "helpers/array.php",
+            "helpers/debug.php",
+            "helpers/env.php",
+            "helpers/str.php"
         ]
     }
 }
