@@ -2,7 +2,7 @@
 
 namespace Viloveul\Support;
 
-use Illuminate\Database\Eloquent\Model;
+use Closure;
 use InvalidArgumentException;
 
 class Pagination
@@ -98,6 +98,14 @@ class Pagination
     }
 
     /**
+     * @return mixed
+     */
+    public function getData()
+    {
+        return $this->data;
+    }
+
+    /**
      * @param  $default
      * @return mixed
      */
@@ -132,10 +140,15 @@ class Pagination
         return strtoupper($this->sortOrder ?: $default);
     }
 
+    public function getTotal()
+    {
+        return abs($this->total);
+    }
+
     /**
-     * @param Model $model
+     * @param Closure $handler
      */
-    public function prepare(Model $model)
+    public function prepare(Closure $handler)
     {
         if (array_key_exists($this->searchName, $this->params) && is_array($this->params[$this->searchName])) {
             $this->conditions = (array) $this->params;
@@ -146,14 +159,7 @@ class Pagination
                 }
             }
         }
-        foreach ($this->conditions as $key => $value) {
-            $model->where($key, 'LIKE', "%{$value}%");
-        }
-        $this->total = $model->count();
-        $this->data = $model->orderBy($this->getOrderBy(), $this->getSortOrder())
-            ->skip(($this->getCurrentPage() * $this->getPageSize()) - $this->getPageSize())
-            ->take($this->getPageSize())
-            ->get();
+        call_user_func($handler, $this, $this->conditions);
     }
 
     public function results()
@@ -162,11 +168,11 @@ class Pagination
             'links' => [
                 'self' => $this->buildUrl($this->getCurrentPage()),
                 'prev' => $this->getCurrentPage() > 1 ? $this->buildUrl($this->getCurrentPage() - 1) : null,
-                'next' => ($this->getCurrentPage() * $this->getPageSize()) < $this->total ? $this->buildUrl($this->getCurrentPage() + 1) : null,
+                'next' => ($this->getCurrentPage() * $this->getPageSize()) < $this->getTotal() ? $this->buildUrl($this->getCurrentPage() + 1) : null,
                 'first' => $this->buildUrl(1),
-                'last' => $this->buildUrl(ceil($this->total / $this->getPageSize())),
+                'last' => $this->buildUrl(ceil($this->getTotal() / $this->getPageSize())),
             ],
-            'data' => $this->data->toArray(),
+            'data' => $this->data,
         ];
     }
 
@@ -203,6 +209,14 @@ class Pagination
     }
 
     /**
+     * @param array $data
+     */
+    public function setData(array $data)
+    {
+        $this->data = $data;
+    }
+
+    /**
      * @param $orderBy
      */
     public function setOrderBy($orderBy)
@@ -234,6 +248,14 @@ class Pagination
     public function setSortOrder($sortOrder)
     {
         $this->sortOrder = $sortOrder;
+    }
+
+    /**
+     * @param $total
+     */
+    public function setTotal($total)
+    {
+        $this->total = abs($total);
     }
 
     /**
