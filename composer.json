@@ -1,13 +1,15 @@
 {
     "name": "viloveul/support",
-    "description": "Viloveul micro.",
-    "type": "component",
+    "description": "Wrapper for bundling all helpers",
+    "type": "library",
     "license": "MIT",
+    "keywords": ["zafex", "viloveul", "fajrulaz", "support", "helpers", "component", "library"],
+    "homepage": "http://www.viloveul.com",
+    "readme": "README.MD",
     "authors": [{
         "name": "Fajrul Akbar Zuhdi",
         "email": "fajrulaz@gmail.com"
     }],
-    "keywords": ["component", "zafex", "viloveul", "fajrulaz", "support", "helpers"],
     "minimum-stability": "dev",
     "prefer-stable": true,
     "config": {
