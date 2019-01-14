@@ -1,9 +1,9 @@
 {
     "name": "viloveul/support",
-    "description": "Wrapper for bundling all helpers",
+    "description": "Wrapper for bundling all 3rd-party and common helpers",
     "type": "library",
     "license": "MIT",
-    "keywords": ["zafex", "viloveul", "fajrulaz", "support", "helpers", "component", "library"],
+    "keywords": ["zafex", "viloveul", "fajrulaz", "support", "component", "library"],
     "homepage": "http://www.viloveul.com",
     "readme": "README.MD",
     "authors": [{
@@ -24,11 +24,6 @@
         "psr-4": {
             "Viloveul\\Support\\": "src/"
         },
-        "files": [
-            "helpers/array.php",
-            "helpers/debug.php",
-            "helpers/env.php",
-            "helpers/str.php"
-        ]
+        "files": ["helpers/array.php", "helpers/debug.php", "helpers/env.php", "helpers/str.php"]
     }
 }
