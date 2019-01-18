@@ -1,39 +1,44 @@
 <?php
 
-if (!function_exists('isInvokable')) {
+if (!function_exists('is_invokable')) {
     /**
-     * @param $object
+     * @param object $object
      */
-    function isInvokable($object)
+    function is_invokable(object $object)
     {
-        if (is_object($object)) {
-            return ($object instanceof Closure) or method_exists($object, '__invoke');
-        }
-        return is_callable($object);
+        return ($object instanceof Closure) or method_exists($object, '__invoke');
     }
 }
 
-if (!function_exists('isInstantiable')) {
+if (!function_exists('is_instantiable')) {
     /**
      * @param  $class
      * @return mixed
      */
-    function isInstantiable($class)
+    function is_instantiable($class)
     {
-        $ref = new ReflectionClass($class);
-        return $ref->isInstantiable();
+        try {
+            $ref = new ReflectionClass($class);
+            return $ref->isInstantiable();
+        } catch (ReflectionException $e) {
+            return false;
+        }
     }
 }
 
-if (!function_exists('isImplementsOf')) {
+if (!function_exists('is_implements_of')) {
     /**
      * @param  $class
      * @param  $interface
      * @return mixed
      */
-    function isImplementsOf($class, $interface)
+    function is_implements_of($class, $interface)
     {
-        $ref = new ReflectionClass($class);
-        return $ref->implementsInterface($interface);
+        try {
+            $ref = new ReflectionClass($class);
+            return $ref->implementsInterface($interface);
+        } catch (ReflectionException $e) {
+            return false;
+        }
     }
 }

@@ -2,12 +2,18 @@
 
 if (!function_exists('str_contains')) {
     /**
-     * @param $str
-     * @param $needle
-     * @param $sensitive
+     * @param string $str
+     * @param mixed  $needles
+     * @param bool   $sensitive
      */
-    function str_contains($str, $needle, $sensitive = true)
+    function str_contains(string $str, $needles, bool $sensitive = true): bool
     {
-        return Stringy\Stringy::create($str)->contains($needle, $sensitive);
+        $posHandler = $sensitive === true ? 'mb_strpos' : 'mb_stripos';
+        foreach ((array) $needles as $needle) {
+            if ($needle !== '' && $posHandler($str, $needle) !== false) {
+                return true;
+            }
+        }
+        return false;
     }
 }
