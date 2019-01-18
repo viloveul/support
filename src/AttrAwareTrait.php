@@ -3,7 +3,7 @@
 namespace Viloveul\Support;
 
 use ArrayIterator;
-use InvalidArgumentException;
+use BadMethodCallException;
 
 trait AttrAwareTrait
 {
@@ -47,10 +47,7 @@ trait AttrAwareTrait
      */
     public function delete(string $key): void
     {
-        if ($this->has($key)) {
-            $this->attributes[$key] = null;
-            unset($this->attributes[$key]);
-        }
+        throw new BadMethodCallException("Cannot delete using AttrAwareTrait, please overwrite this method.");
     }
 
     /**
@@ -60,16 +57,13 @@ trait AttrAwareTrait
      */
     public function get(string $key, $default = null)
     {
-        return $this->has($key) ? $this->attributes[$key] : $default;
+        return array_get($this->getAttributes(), $key, $default);
     }
 
     /**
      * @return mixed
      */
-    public function getAttributes(): array
-    {
-        return $this->attributes;
-    }
+    abstract public function getAttributes(): array;
 
     public function getIterator(): ArrayIterator
     {
@@ -81,7 +75,7 @@ trait AttrAwareTrait
      */
     public function has(string $key): bool
     {
-        return array_key_exists($key, $this->attributes);
+        return array_has($this->getAttributes(), $key);
     }
 
     /**
@@ -135,32 +129,21 @@ trait AttrAwareTrait
     public function set(string $key, $value = null, $overwrite = true): void
     {
         if (!$this->has($key) || $overwrite === true) {
-            $this->attributes[$key] = $value;
+            $this->setAttributes([$key => $value]);
         }
     }
 
     /**
      * @param $attributes
      */
-    public function setAttributes($attributes): void
-    {
-        if (is_array($attributes)) {
-            foreach ($attributes as $key => $value) {
-                $this->set($key, $value);
-            }
-        } elseif (is_object($attributes)) {
-            $this->setAttributes(get_object_vars($attributes));
-        } else {
-            throw new InvalidArgumentException("Parameter must be object or array");
-        }
-    }
+    abstract public function setAttributes($attributes): void;
 
     /**
      * @return mixed
      */
     public function toArray(): array
     {
-        return $this->attributes;
+        return $this->getAttributes();
     }
 
     /**
