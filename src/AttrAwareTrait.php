@@ -106,7 +106,7 @@ trait AttrAwareTrait
     public function forget(string $key): void
     {
         if ($this->has($key)) {
-            unset($this->{$this->attrkey()});
+            unset($this->{$this->attrkey()}[$key]);
         }
     }
 
