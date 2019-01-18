@@ -24,6 +24,6 @@
         "psr-4": {
             "Viloveul\\Support\\": "src/"
         },
-        "files": ["helpers/array.php", "helpers/debug.php", "helpers/env.php", "helpers/str.php"]
+        "files": ["helpers/array.php", "helpers/debug.php", "helpers/env.php", "helpers/str.php", "helpers/class.php"]
     }
 }
