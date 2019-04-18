@@ -2,11 +2,11 @@
 
 namespace Viloveul\Support;
 
-use ArrayIterator;
-use BadMethodCallException;
 use Closure;
-use ReflectionException;
+use ArrayIterator;
 use ReflectionObject;
+use ReflectionException;
+use BadMethodCallException;
 
 trait AttrAwareTrait
 {
@@ -25,8 +25,10 @@ trait AttrAwareTrait
                 $this->set($name, $value);
                 break;
             case 'get':
-            default:
                 return $this->get($name, $value);
+                break;
+            default:
+                throw new BadMethodCallException("method {$key} does not exists.");
                 break;
         }
     }
@@ -63,7 +65,7 @@ trait AttrAwareTrait
      */
     public function __unset($key)
     {
-        $this->forget($key);
+        $this->delete($key);
     }
 
     /**
@@ -71,7 +73,7 @@ trait AttrAwareTrait
      */
     public function all(Closure $handler = null): array
     {
-        return is_null($handler) ? $this->getAttributes() : $handler($this->getAttributes());
+        return null === $handler ? $this->getAttributes() : $handler($this->getAttributes());
     }
 
     /**
@@ -93,21 +95,21 @@ trait AttrAwareTrait
     }
 
     /**
+     * @param string $key
+     */
+    public function delete(string $key): void
+    {
+        if ($this->has($key)) {
+            unset($this->{$this->attrkey()}[$key]);
+        }
+    }
+
+    /**
      * @param $callback
      */
     public function filter(callable $callback)
     {
         return new static(array_filter($this->all(), $callback));
-    }
-
-    /**
-     * @param string $key
-     */
-    public function forget(string $key): void
-    {
-        if ($this->has($key)) {
-            unset($this->{$this->attrkey()}[$key]);
-        }
     }
 
     /**
@@ -189,7 +191,7 @@ trait AttrAwareTrait
      */
     public function offsetUnset($key)
     {
-        $this->forget($key);
+        $this->delete($key);
     }
 
     /**
