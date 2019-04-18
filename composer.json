@@ -17,12 +17,19 @@
     },
     "require": {
         "php": "~7.0",
+        "ramsey/uuid": "^3.8",
         "symfony/var-dumper": "~3.4|~4.0"
     },
     "autoload": {
         "psr-4": {
             "Viloveul\\Support\\": "src/"
         },
-        "files": ["helpers/array.php", "helpers/debug.php", "helpers/env.php", "helpers/str.php", "helpers/class.php"]
+        "files": [
+            "helpers/array.php",
+            "helpers/debug.php",
+            "helpers/env.php",
+            "helpers/str.php",
+            "helpers/class.php"
+        ]
     }
 }
