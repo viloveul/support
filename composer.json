@@ -17,9 +17,7 @@
     },
     "require": {
         "php": "~7.0",
-        "ramsey/uuid": "^3.8"
-    },
-    "require-dev": {
+        "ramsey/uuid": "^3.8",
         "symfony/var-dumper": "~3.4|~4.0"
     },
     "autoload": {
